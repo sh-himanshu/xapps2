@@ -8,14 +8,20 @@ import yaml
 
 from .apkdl import ApkDL
 from .utils import resolve_name
+import logging
+
+LOG = logging.getLogger(__name__)
 
 
 async def limit_coro(
     file_name: str, sem: asyncio.Semaphore, coro: Coroutine
 ) -> Optional[str]:
     async with sem:
-        if res := await coro:
-            return f"{file_name}|{res}"
+        try:
+            if res := await coro:
+                return f"{file_name}|{res}"
+        except Exception as e:
+            LOG.error(f"{e.__class__.__name__}: {e}")
 
 
 async def main():

@@ -5,7 +5,6 @@ import re
 from typing import Any, Dict, Iterator, List, Optional, Pattern
 
 from aiohttp.client_exceptions import ContentTypeError
-from bs4 import BeautifulSoup
 
 from .config import DEVICE
 from .nikgappsdl import get_nikgapps
@@ -13,7 +12,7 @@ from .nikgappsdl import get_nikgapps
 
 class Sources:
     xda: str = "https://forum.xda-developers.com/"
-    vlc: str = "https://get.videolan.org/vlc-android/"
+    # vlc: str = "https://get.videolan.org/vlc-android/"
     fdroid: str = "https://f-droid.org/"
     instander: str = "https://raw.githubusercontent.com/the-dise/the-dise.github.io/master/instander/ota.json"
 
@@ -56,18 +55,18 @@ class MiscDL:
         if match := self.mixplorer_regex.search(text):
             return f"{Sources.xda}{match.group(0)}"
 
-    async def vlc(self) -> Optional[str]:
-        try:
-            async with self.http.get(Sources.vlc) as resp:
-                assert resp.status == 200
-                text = await resp.text()
-                version = BeautifulSoup(text, "lxml").findAll("a")[-1].get("href")[:-1]
-        except Exception:
-            version = "3.3.4"
-        apk_url = f"{Sources.vlc}{version}/VLC-Android-{version}-{DEVICE.arch}.apk"
-        async with self.http.get(apk_url) as apk:
-            if apk.status == 200:
-                return apk_url
+    # async def vlc(self) -> Optional[str]:
+    #     try:
+    #         async with self.http.get(Sources.vlc) as resp:
+    #             assert resp.status == 200
+    #             text = await resp.text()
+    #             version = BeautifulSoup(text, "lxml").findAll("a")[-1].get("href")[:-1]
+    #     except Exception:
+    #         version = "3.3.4"
+    #     apk_url = f"{Sources.vlc}{version}/VLC-Android-{version}-{DEVICE.arch}.apk"
+    #     async with self.http.get(apk_url) as apk:
+    #         if apk.status == 200:
+    #             return apk_url
 
     async def json_api(self, link: str, args: List[str]) -> Optional[str]:
         if resp := await self._get_json(link):

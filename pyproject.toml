@@ -6,8 +6,6 @@ authors = ["Leorio Paradinight <62891774+code-rgb@users.noreply.github.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-lxml = "^4.6.3"
-beautifulsoup4 = "^4.9.3"
 pyppeteer = "^0.2.5"
 PyYAML = "^5.4.1"
 aiohttp = "^3.7.4"

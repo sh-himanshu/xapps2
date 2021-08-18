@@ -1,6 +1,5 @@
 addons:
     - nikgapps@basic # ( full | stock | basic | omni | core | go )
-    - vlc
     - nekox@mini # ( full | fullAppleEmoji | mini | miniAppleEmoji )
     - instander
     - mixplorer@silver # Silver includes addons
@@ -22,6 +21,10 @@ custom:
 
     - app: Aurora Store
       package: com.aurora.store
+      source: fdroid
+
+    - app: VLC
+      package: org.videolan.vlc
       source: fdroid
 
     - app: AdAway
