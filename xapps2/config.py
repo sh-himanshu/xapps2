@@ -1,8 +1,8 @@
 __all__ = ["DEVICE"]
 
 import json
-from pathlib import Path
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Literal
 
 

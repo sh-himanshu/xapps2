@@ -1,8 +1,8 @@
 __all__ = ["get_nikgapps"]
 
-from typing import Iterator, Optional, Literal
+from typing import Iterator, Literal, Optional
+
 import feedparser
-from .config import DEVICE
 
 
 async def iter_releases(android_str: str) -> Iterator[str]:

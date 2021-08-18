@@ -1,6 +1,5 @@
 import re
 
-
 import yaml
 
 with open("config.yaml", "r") as f:

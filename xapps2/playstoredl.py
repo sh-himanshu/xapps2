@@ -1,17 +1,13 @@
 __all__ = ["PlayStoreDL"]
 
 import asyncio
-import json
-import re
-import sys
-from typing import Dict, List, Optional, Pattern, Union
+import logging
+from typing import Dict, Optional, Union
 from urllib.parse import urlencode
 
-import aiohttp
 import pyppeteer
-from bs4 import BeautifulSoup
+
 from .config import DEVICE
-import logging
 
 LOG = logging.getLogger(__name__)
 

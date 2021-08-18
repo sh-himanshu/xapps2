@@ -1,10 +1,12 @@
 __all__ = ["main"]
 
-from typing import List, Optional
-import yaml
-from .apkdl import ApkDL
-import re
 import asyncio
+import re
+from typing import List, Optional
+
+import yaml
+
+from .apkdl import ApkDL
 from .utils import resolve_name
 
 sem = asyncio.Semaphore(8)

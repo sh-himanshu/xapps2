@@ -1,7 +1,7 @@
-from functools import partial
 import asyncio
-from typing import Any, Awaitable, Callable
 import re
+from functools import partial
+from typing import Any, Awaitable, Callable
 
 APK_NAME = re.compile(r"[^A-Za-z0-9]")
 

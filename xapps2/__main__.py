@@ -1,6 +1,7 @@
-from .main import main
 import asyncio
 import sys
+
+from .main import main
 
 if __name__ == "__main__":
     if sys.platform == "win32":
