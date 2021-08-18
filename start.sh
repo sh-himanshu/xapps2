@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Fail fast
-set -euo pipefail
+set -x
 
 # Run Python Script
 echo -e "Running python script\n"
