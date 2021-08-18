@@ -81,7 +81,7 @@ class MiscDL:
     async def instander(self) -> Optional[str]:
         async with self.http.get(Sources.instander) as resp:
             assert resp.status == 200
-            text = await resp.text
+            text = await resp.text()
             return json.loads(text).get("link")
 
     async def iter_release_files(self, repo: str) -> Iterator[Any]:
