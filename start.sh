@@ -29,4 +29,7 @@ mkdir -p pakages && mv *.apk pakages/
 tar -czvf pakages.tar.gz pakages
 mkdir -p release
 mv pakages.tar.gz release/
-# test -f "nikgapps.zip" && mv "nikgapps.zip" release/
+
+if  [[ -f "nikgapps.zip" ]]; then
+    mv "nikgapps.zip" release/
+fi

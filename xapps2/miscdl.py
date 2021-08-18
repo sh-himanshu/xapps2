@@ -24,7 +24,6 @@ class MiscDL:
         self.mixplorer_regex = re.compile(
             r"(?<=/)attachments/mixplorer_v(?:[6-9]|\d{2,})-[\d-]+api[\w-]+-apk\.\d+"
         )
-
         super().__init__()
 
     async def _get_json(self, url: str) -> Optional[Dict]:
@@ -54,19 +53,6 @@ class MiscDL:
             text = await resp.text()
         if match := self.mixplorer_regex.search(text):
             return f"{Sources.xda}{match.group(0)}"
-
-    # async def vlc(self) -> Optional[str]:
-    #     try:
-    #         async with self.http.get(Sources.vlc) as resp:
-    #             assert resp.status == 200
-    #             text = await resp.text()
-    #             version = BeautifulSoup(text, "lxml").findAll("a")[-1].get("href")[:-1]
-    #     except Exception:
-    #         version = "3.3.4"
-    #     apk_url = f"{Sources.vlc}{version}/VLC-Android-{version}-{DEVICE.arch}.apk"
-    #     async with self.http.get(apk_url) as apk:
-    #         if apk.status == 200:
-    #             return apk_url
 
     async def json_api(self, link: str, args: List[str]) -> Optional[str]:
         if resp := await self._get_json(link):
@@ -99,7 +85,10 @@ class MiscDL:
         if DEVICE.arch != "arm64-v8a":
             return
         if link := await get_nikgapps(DEVICE.android_str, varient):
-            return link
-            # async with self.http.get(link) as resp:
-            #     assert resp.status == 200
-            #     return resp.url  # redirected direct download link
+            async with self.http.get(link) as resp:
+                assert resp.status == 200
+                text = await resp.text()
+                if match := re.search(
+                    r"<a href=\"(?P<link>\S+)\">direct\slink</a>", text
+                ):
+                    return match.group("link")

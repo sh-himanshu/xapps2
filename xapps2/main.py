@@ -25,7 +25,7 @@ async def limit_coro(
 
 
 async def main():
-    re.compile(r"[^A-Za-z0-9]")
+
     async with ApkDL() as apk_dl:
 
         with open("config.yaml", "r") as f:
@@ -33,7 +33,7 @@ async def main():
 
         tasks: List = []
 
-        sem = asyncio.Semaphore(8)
+        sem = asyncio.Semaphore(6)
 
         for addon in apps_conf["addons"]:
             if func := getattr(apk_dl, addon, None):

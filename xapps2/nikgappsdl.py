@@ -1,7 +1,7 @@
 __all__ = ["get_nikgapps"]
 
 from typing import Iterator, Literal, Optional
-
+import re
 import feedparser
 
 
@@ -20,8 +20,11 @@ async def get_nikgapps(
     gapp_choice = (f"nikgapps-{varient}-{arch}").lower()
     async for sf_link in iter_releases(android_str):
         if gapp_choice in sf_link.lower():
-            dl_link = f"{sf_link}?use_mirror=autoselect"
             break
     else:
-        dl_link = None
-    return dl_link
+        return
+    if match := re.match(
+        "https://sourceforge\.net/projects/nikgapps/files/(?P<file>\S+\.zip)(?:/download)?",
+        sf_link,
+    ):
+        return f"https://sourceforge.net/settings/mirror_choices?projectname=nikgapps&filename={match.group('file')}"
