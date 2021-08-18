@@ -12,8 +12,8 @@ echo "SUCCESS"
 while read line;
 do  
     lineSplit=(${line//|/ })
-    url=$(echo ${lineSplit[0]} | xargs) 
-    pkg_name=$(echo ${lineSplit[1]} | xargs)
+    url=$(echo ${lineSplit[1]} | xargs) 
+    pkg_name=$(echo ${lineSplit[0]} | xargs)
 
     if ! [[ $pkg_name =~ .+\.(apk|zip)$ ]]
     then
