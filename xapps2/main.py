@@ -32,7 +32,7 @@ async def main():
 
         tasks: List = []
 
-        sem = asyncio.Semaphore(6)
+        sem = asyncio.Semaphore(8)
 
         for addon in apps_conf["addons"]:
             if func := getattr(apk_dl, addon, None):
