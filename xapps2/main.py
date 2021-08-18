@@ -1,6 +1,7 @@
 __all__ = ["main"]
 
 import asyncio
+import logging
 import re
 from typing import Coroutine, List, Optional
 
@@ -8,7 +9,6 @@ import yaml
 
 from .apkdl import ApkDL
 from .utils import resolve_name
-import logging
 
 LOG = logging.getLogger(__name__)
 
