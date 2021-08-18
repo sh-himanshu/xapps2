@@ -2,17 +2,17 @@ __all__ = ["main"]
 
 import asyncio
 import re
-from typing import List, Optional
+from typing import Coroutine, List, Optional
 
 import yaml
 
 from .apkdl import ApkDL
 from .utils import resolve_name
 
-sem = asyncio.Semaphore(8)
 
-
-async def limit_coro(file_name: str, coro) -> Optional[str]:
+async def limit_coro(
+    file_name: str, sem: asyncio.Semaphore, coro: Coroutine
+) -> Optional[str]:
     async with sem:
         if res := await coro:
             return f"{file_name}|{res}"
@@ -26,22 +26,27 @@ async def main():
             apps_conf = yaml.load(f, Loader=yaml.FullLoader)
 
         tasks: List = []
+
+        sem = asyncio.Semaphore(8)
+
         for addon in apps_conf["addons"]:
             if func := getattr(apk_dl, addon, None):
                 file_ext = ".zip" if "nikgapps" in addon else ".apk"
                 tasks.append(
-                    (addon.replace("@", "_") + file_ext, func(*addon.split("@", 1)[1:]))
+                    (
+                        addon.replace("@", "_") + file_ext,
+                        sem,
+                        func(*addon.split("@", 1)[1:]),
+                    )
                 )
 
         for app in apps_conf["custom"]:
             apk_name = resolve_name(app["app"])
             source = app["source"]
-            if source == "fdroid":
-                tasks.append((apk_name, apk_dl.fdroid(app["package"])))
+            if source in ("fdroid", "playstore"):
+                tasks.append((apk_name, sem, getattr(apk_dl, source)(app["package"])))
             elif source == "github":
-                tasks.append((apk_name, apk_dl.github(*app["args"])))
-            elif source == "playstore":
-                tasks.append((apk_name, apk_dl.playstore(app["package"])))
+                tasks.append((apk_name, sem, apk_dl.github(*app["args"])))
 
         urls = await asyncio.gather(*map(lambda x: limit_coro(*x), tasks))
 
