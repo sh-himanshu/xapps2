@@ -1,7 +1,8 @@
 __all__ = ["get_nikgapps"]
 
-from typing import Iterator, Literal, Optional
 import re
+from typing import Iterator, Literal, Optional
+
 import feedparser
 
 

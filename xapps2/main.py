@@ -2,7 +2,6 @@ __all__ = ["main"]
 
 import asyncio
 import logging
-import re
 from typing import Coroutine, List, Optional
 
 import yaml
