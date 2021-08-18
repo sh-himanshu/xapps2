@@ -6,7 +6,7 @@ from typing import Dict, Optional, Union
 from urllib.parse import urlencode
 
 import pyppeteer
-
+from random import choice
 from .config import DEVICE
 
 LOG = logging.getLogger(__name__)
@@ -30,7 +30,7 @@ class PlayStoreDL:
 
     async def _playstore_fetch(self, package_name: str) -> Optional[str]:
         page = await self.browser.newPage()
-        await page.setUserAgent(self.ua.random)
+        await page.setUserAgent(choice(self.user_agents))
         url = f"{self.dl_site}?{urlencode({'package': package_name.strip(), **self.params})}"
         await page.goto(url)
         element = None
