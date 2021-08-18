@@ -27,4 +27,6 @@ done < apk_urls.txt
 # Compress Output
 mkdir -p pakages && mv *.apk pakages/
 tar -czvf pakages.tar.gz pakages
-mkdir release && mv pakages.tar.gz *.zip release/
+mkdir -p release
+mv pakages.tar.gz release/
+mv *.zip release/

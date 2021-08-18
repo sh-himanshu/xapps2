@@ -20,8 +20,8 @@ async def limit_coro(
         try:
             if res := await coro:
                 return f"{file_name}|{res}"
-        except Exception as e:
-            LOG.error(f"{e.__class__.__name__}: {e}")
+        except Exception:
+            LOG.exception(f"Failed to Downoad '{file_name}'")
 
 
 async def main():
