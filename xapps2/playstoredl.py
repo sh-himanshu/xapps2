@@ -2,11 +2,12 @@ __all__ = ["PlayStoreDL"]
 
 import asyncio
 import logging
+from random import choice
 from typing import Dict, Optional, Union
 from urllib.parse import urlencode
 
 import pyppeteer
-from random import choice
+
 from .config import DEVICE
 
 LOG = logging.getLogger(__name__)

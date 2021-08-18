@@ -1,10 +1,11 @@
 __all__ = ["ApkDL"]
 import logging
 import sys
+from random import choice, sample
 from typing import List
 
 import pyppeteer
-from random import choice, sample
+
 from .http import Http
 from .miscdl import MiscDL
 from .playstoredl import PlayStoreDL
