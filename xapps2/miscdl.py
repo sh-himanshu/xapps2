@@ -1,6 +1,7 @@
 __all__ = ["MiscDL"]
 
 import json
+import logging
 import re
 from typing import Any, Dict, Iterator, List, Optional, Pattern
 
@@ -8,7 +9,6 @@ from aiohttp.client_exceptions import ContentTypeError
 
 from .config import DEVICE
 from .nikgappsdl import get_nikgapps
-import logging
 
 LOG = logging.getLogger(__name__)
 
