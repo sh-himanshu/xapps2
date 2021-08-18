@@ -15,7 +15,7 @@ class Http:
         return self._session and not self._session.closed
 
     @property
-    def session(self) -> ClientSession:
+    def http(self) -> ClientSession:
         if not self.is_active:
             self._session = self.new_session()
         return self._session
