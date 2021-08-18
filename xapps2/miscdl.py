@@ -99,6 +99,7 @@ class MiscDL:
         if DEVICE.arch != "arm64-v8a":
             return
         if link := await get_nikgapps(DEVICE.android_str, varient):
-            async with self.http.get(link) as resp:
-                assert resp.status == 200
-                return resp.url  # redirected direct download link
+            return link
+            # async with self.http.get(link) as resp:
+            #     assert resp.status == 200
+            #     return resp.url  # redirected direct download link
