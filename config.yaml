@@ -1,0 +1,71 @@
+addons:
+    - nikgapps@basic # ( full | stock | basic | omni | core | go )
+    - vlc
+    - nekox@mini # ( full | fullAppleEmoji | mini | miniAppleEmoji )
+    - instander
+    - mixplorer@silver # Silver includes addons
+
+custom:
+    - app: xManager (Spotify)
+      source: github
+      args:
+          - xManager-v2/xManager-Spotify
+          - xManager.apk
+
+    - app: Infinity for Reddit
+      package: ml.docilealligator.infinityforreddit
+      source: fdroid
+
+    - app: Aurora Droid
+      package: com.aurora.adroid
+      source: fdroid
+
+    - app: Aurora Store
+      package: com.aurora.store
+      source: fdroid
+
+    - app: AdAway
+      package: org.adaway
+      source: fdroid
+
+    - app: Vanced Manager
+      source: github
+      args:
+          - YTVanced/VancedManager
+          - manager.apk
+
+    - app: Whatsapp
+      package: com.whatsapp
+      source: playstore
+
+    - app: Gmail
+      package: com.google.android.gm
+      source: playstore
+
+    - app: Google Keep - notes and lists
+      package: com.google.android.keep
+      source: playstore
+
+    - app: Google Maps
+      package: com.google.android.apps.maps
+      source: playstore
+
+    - app: Google Calendar
+      package: com.google.android.calendar
+      source: playstore
+
+    - app: Adobe Scan
+      package: com.adobe.scan.android
+      source: playstore
+
+    - app: Gboard
+      package: com.google.android.inputmethod.latin
+      source: playstore
+
+    - app: Microsoft Office
+      package: com.microsoft.office.officehubrow
+      source: playstore
+
+    - app: Google Photos
+      package: com.google.android.apps.photos
+      source: playstore
