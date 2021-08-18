@@ -34,7 +34,7 @@ async def main():
 
         sem = asyncio.Semaphore(6)
 
-        for addon in apps_conf["addons"]:
+        for addon in set(apps_conf["addons"]):
             if func := getattr(apk_dl, addon, None):
                 file_ext = ".zip" if "nikgapps" in addon else ".apk"
                 tasks.append(
@@ -45,7 +45,7 @@ async def main():
                     )
                 )
 
-        for app in apps_conf["custom"]:
+        for app in set(apps_conf["custom"]):
             apk_name = resolve_name(app["app"])
             source = app["source"]
             if source in ("fdroid", "playstore"):

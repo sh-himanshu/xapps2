@@ -19,6 +19,7 @@ async def get_nikgapps(
 ) -> Optional[str]:
     arch = "arm64"  # Niksgapps has only arm64 varient
     gapp_choice = (f"nikgapps-{varient}-{arch}").lower()
+    print("Searching Gapps")
     async for sf_link in iter_releases(android_str):
         if gapp_choice in sf_link.lower():
             break
@@ -28,4 +29,6 @@ async def get_nikgapps(
         "https://sourceforge\.net/projects/nikgapps/files/(?P<file>\S+\.zip)(?:/download)?",
         sf_link,
     ):
+
         return f"https://sourceforge.net/settings/mirror_choices?projectname=nikgapps&filename={match.group('file')}"
+    print("no Gapps found")

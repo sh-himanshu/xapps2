@@ -72,3 +72,19 @@ custom:
     - app: Google Photos
       package: com.google.android.apps.photos
       source: playstore
+
+    - app: Termux
+      package: com.termux
+      source: fdroid
+
+    - app: Mi Remote controller
+      package: com.duokan.phone.remotecontroller
+      source: playstore
+
+    - app: Brave Private Browser
+      package: com.brave.browser
+      source: playstore
+
+    - app: Microsoft Teams
+      package: com.microsoft.teams
+      source: playstore

@@ -8,6 +8,9 @@ from aiohttp.client_exceptions import ContentTypeError
 
 from .config import DEVICE
 from .nikgappsdl import get_nikgapps
+import logging
+
+LOG = logging.getLogger(__name__)
 
 
 class Sources:
@@ -82,12 +85,16 @@ class MiscDL:
 
     async def niksgapps(self, varient: str = "basic") -> Optional[str]:
         if DEVICE.arch != "arm64-v8a":
+            print("Nikgapps: Device not compatible")
             return
         if link := await get_nikgapps(DEVICE.android_str, varient):
             async with self.http.get(link) as resp:
+                print("Nikgapps: fetching link")
                 assert resp.status == 200
                 text = await resp.text()
+                print("Nikgapps: getting text")
                 if match := re.search(
                     r"<a href=\"(?P<link>\S+)\">direct\slink</a>", text
                 ):
+                    print(match.group("link"))
                     return match.group("link")
