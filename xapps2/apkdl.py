@@ -2,7 +2,7 @@ __all__ = ["ApkDL"]
 import logging
 import sys
 from random import choice, sample
-from typing import List
+from typing import List, Optional
 
 import pyppeteer
 
@@ -15,9 +15,10 @@ LOG = logging.getLogger(__name__)
 
 class ApkDL(Http, PlayStoreDL, MiscDL):
     browser: pyppeteer.browser.Browser
-    user_agents: List[str]
+    user_agents: Optional[List[str]]
 
     def __init__(self) -> None:
+        self.user_agents = None
         super().__init__()
 
     async def load_useragents(self) -> None:
@@ -28,14 +29,18 @@ class ApkDL(Http, PlayStoreDL, MiscDL):
             if resp.status == 200:
                 text = await resp.text()
                 self.user_agents = sample(text.split("\n"), 10)
-            else:
-                self.user_agents = [
-                    (
-                        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                        "AppleWebKit/537.36 (KHTML, like Gecko) "
-                        "Chrome/74.0.3729.157 Safari/537.36"
-                    )
-                ]
+
+    @property
+    def ua(self) -> str:
+        return (
+            choice(self.user_agents)
+            if self.user_agents
+            else (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/74.0.3729.157 Safari/537.36"
+            )
+        )
 
     async def start(self) -> None:
         try:

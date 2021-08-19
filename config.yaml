@@ -88,3 +88,10 @@ custom:
     - app: Microsoft Teams
       package: com.microsoft.teams
       source: playstore
+
+    - app: Google Camera
+      args:
+          - best # Depends on device codename
+          # or provide a direct link
+          # - https://www.celsoazevedo.com/files/android/google-camera/f/changelog1500/
+      source: gcam

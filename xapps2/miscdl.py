@@ -17,6 +17,29 @@ class Sources:
     instander: str = "https://raw.githubusercontent.com/the-dise/the-dise.github.io/master/instander/ota.json"
 
 
+class Gcam:
+    headers: Dict[str, str] = {
+        "upgrade-insecure-requests": "1",
+        "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+        "sec-fetch-site": "same-site",
+        "sec-fetch-mode": "navigate",
+        "sec-fetch-user": "?1",
+        "sec-fetch-dest": "document",
+        "referer": "https://www.celsoazevedo.com/",
+        "accept-language": "en-US,en;q=0.9",
+    }
+    regex: Pattern = re.compile(
+        r"(?<=<a\shref=\")https://(?P<cdn>[\w-]+)\.celsoazevedo\.com/file/(?P<path>\w+/(?P<filename>[\w.-]+\.apk))(?=\">)"
+    )
+    cdns: Dict[str, str] = {
+        "1-dontsharethislink": "7-dontsharethislink",
+        "f": "temp4-f",
+    }
+    best: Dict[str, str] = {
+        "begonia": "https://www.celsoazevedo.com/files/android/google-camera/dev-wichaya/f/dl3/"
+    }
+
+
 class MiscDL:
     mixplorer_regex: Pattern
 
@@ -91,3 +114,35 @@ class MiscDL:
                     r"<a href=\"(?P<link>\S+)\">direct\slink</a>", text
                 ):
                     return match.group("link")
+
+    async def gcam(self, *args) -> Optional[str]:
+        if not args:
+            return
+
+        arg1 = args[0].strip()
+        if arg1 == "best":
+            gcam_link = Gcam.best.get(DEVICE.codename)
+        elif arg1.startswith("https://"):
+            gcam_link = arg1
+
+        if not gcam_link:
+            return
+
+        async with self.http.get(gcam_link) as resp:
+            assert resp.status == 200
+            text = await resp.text()
+        if match := Gcam.regex.search(text):
+            cdn = match.group("cdn")
+            if cdn in Gcam.cdns:
+                return f"https://{Gcam.cdns[cdn]}.celsoazevedo.com/file/{match.group('path')}"
+
+            async with self.http.get(
+                match.group(0),
+                allow_redirects=True,
+                headers={
+                    "authority": f"{cdn}.celsoazevedo.com",
+                    "User-Agent": self.ua,
+                    **Gcam.headers,
+                },
+            ) as response:
+                return response.url

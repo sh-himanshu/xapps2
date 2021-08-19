@@ -1,4 +1,5 @@
 {
+    "codename": "begonia",
     "android": 11,
     "arch": "arm64-v8a",
     "dpi": 480

@@ -9,6 +9,7 @@ from typing import Literal
 @dataclass
 class Device:
     android: Literal[9, 10, 11, 12]
+    codename: str = ""
     arch: Literal["armeabi-v7a", "arm64-v8a", "x86", "x86_64"] = "arm64-v8a"
     dpi: Literal[120, 160, 240, 320, 480] = 480
     android_str: str = field(init=False)

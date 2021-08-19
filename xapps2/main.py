@@ -50,8 +50,8 @@ async def main():
             source = app["source"]
             if source in ("fdroid", "playstore"):
                 tasks.append((apk_name, sem, getattr(apk_dl, source)(app["package"])))
-            elif source == "github":
-                tasks.append((apk_name, sem, apk_dl.github(*app["args"])))
+            elif source in ("github", "gcam"):
+                tasks.append((apk_name, sem, getattr(apk_dl, source)(*app["args"])))
 
         urls = await asyncio.gather(*map(lambda x: limit_coro(*x), tasks))
 

@@ -2,7 +2,6 @@ __all__ = ["PlayStoreDL"]
 
 import asyncio
 import logging
-from random import choice
 from typing import Dict, Optional, Union
 from urllib.parse import urlencode
 
@@ -31,7 +30,7 @@ class PlayStoreDL:
 
     async def _playstore_fetch(self, package_name: str) -> Optional[str]:
         page = await self.browser.newPage()
-        await page.setUserAgent(choice(self.user_agents))
+        await page.setUserAgent(self.ua)
         url = f"{self.dl_site}?{urlencode({'package': package_name.strip(), **self.params})}"
         await page.goto(url)
         element = None
