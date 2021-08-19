@@ -40,6 +40,7 @@ async def main():
                 filename = "_".join(addon_split) + (
                     ".zip" if addon_split[0] == "nikgapps" else ".apk"
                 )
+
                 tasks.append(
                     (
                         filename,

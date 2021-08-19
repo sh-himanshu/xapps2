@@ -28,5 +28,4 @@ async def get_nikgapps(
         "https://sourceforge\.net/projects/nikgapps/files/(?P<file>\S+\.zip)(?:/download)?",
         sf_link,
     ):
-
-        return f"https://sourceforge.net/settings/mirror_choices?projectname=nikgapps&filename={match.group('file')}"
+        return match.group("file")

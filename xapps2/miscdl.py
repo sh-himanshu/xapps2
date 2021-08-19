@@ -3,7 +3,7 @@ __all__ = ["MiscDL"]
 import json
 import re
 from typing import Any, Dict, Iterator, List, Optional, Pattern
-
+from bs4 import BeautifulSoup
 from aiohttp.client_exceptions import ContentTypeError
 
 from .config import DEVICE
@@ -106,16 +106,22 @@ class MiscDL:
     async def nikgapps(self, varient: str = "basic") -> Optional[str]:
         if DEVICE.arch != "arm64-v8a":
             return
-        if link := await get_nikgapps(DEVICE.android_str, varient):
-            async with self.http.get(link) as resp:
+        if file := await get_nikgapps(DEVICE.android_str, varient):
+            async with self.http.get(
+                f"https://sourceforge.net/settings/mirror_choices?projectname=nikgapps&filename={file}"
+            ) as resp:
                 assert resp.status == 200
                 text = await resp.text()
-                if match := re.search(
-                    r"<a href=\"(?P<link>\S+)\">direct\slink</a>", text
+                for mirror in (
+                    BeautifulSoup(text, "html.parser")
+                    .find("ul", {"id": "mirrorList"})
+                    .find_all("li")
                 ):
-                    return match.group("link")
+                    mirror_id = mirror.get("id")
+                    if mirror_id and (mirror_id not in ("autoselect", "udomain")):
+                        return f"https://{mirror_id}.dl.sourceforge.net/project/nikgapps/{file}"
 
-    async def gcam(self, *args) -> Optional[str]:
+    async def gcam(self, *args: Any) -> Optional[str]:
         if not args:
             return
 

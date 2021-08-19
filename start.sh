@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Fail fast
-set -euo pipefail
+set -uo pipefail
 # set -x  # (Debugging)
 
 # Run Python Script
@@ -31,6 +31,4 @@ tar -czvf pakages.tar.gz pakages
 mkdir -p release
 mv pakages.tar.gz release/
 
-if  [[ -f "nikgapps.zip" ]]; then
-    mv "nikgapps.zip" release/
-fi
+mv *.zip folder/ 2>/dev/null || true
