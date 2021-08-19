@@ -30,5 +30,4 @@ mkdir -p pakages && mv *.apk pakages/
 tar -czvf pakages.tar.gz pakages
 mkdir -p release
 mv pakages.tar.gz release/
-
-mv *.zip folder/ 2>/dev/null || true
+mv *.zip release/ 2>/dev/null || true
