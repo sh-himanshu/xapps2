@@ -3,8 +3,9 @@ __all__ = ["MiscDL"]
 import json
 import re
 from typing import Any, Dict, Iterator, List, Optional, Pattern
-from bs4 import BeautifulSoup
+
 from aiohttp.client_exceptions import ContentTypeError
+from bs4 import BeautifulSoup
 
 from .config import DEVICE
 from .nikgappsdl import get_nikgapps
