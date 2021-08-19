@@ -32,16 +32,19 @@ async def main():
 
         tasks: List = []
 
-        sem = asyncio.Semaphore(8)
+        sem = asyncio.Semaphore(4)
 
         for addon in apps_conf["addons"]:
-            if func := getattr(apk_dl, addon, None):
-                file_ext = ".zip" if "nikgapps" in addon else ".apk"
+            addon_split = addon.split("@", 1)
+            if func := getattr(apk_dl, addon_split[0], None):
+                filename = "_".join(addon_split) + (
+                    ".zip" if addon_split[0] == "nikgapps" else ".apk"
+                )
                 tasks.append(
                     (
-                        addon.replace("@", "_") + file_ext,
+                        filename,
                         sem,
-                        func(*addon.split("@", 1)[1:]),
+                        func(*addon_split[1:]),
                     )
                 )
 

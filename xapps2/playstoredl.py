@@ -28,8 +28,7 @@ class PlayStoreDL:
             "lang": "en",
         }
 
-    async def _playstore_fetch(self, package_name: str) -> Optional[str]:
-        page = await self.browser.newPage()
+    async def _playstore_fetch(self, page, package_name: str) -> Optional[str]:
         await page.setUserAgent(self.ua)
         url = f"{self.dl_site}?{urlencode({'package': package_name.strip(), **self.params})}"
         await page.goto(url)
@@ -54,17 +53,21 @@ class PlayStoreDL:
     async def playstore(self, package_name: str) -> Optional[str]:
         try_count = 0
         dl_link = None
+
         while not dl_link:
             try_count += 1
             LOG.info(f"Trying to connect to server: {try_count}")
             if try_count >= 8:
                 break
+            page = await self.browser.newPage()
             try:
-                dl_link = await self._playstore_fetch(package_name)
+                dl_link = await self._playstore_fetch(page, package_name)
             except Exception as e:
                 LOG.exception(f"{e.__class__.__name__}: {e}")
             else:
                 break
+            finally:
+                await page.close()
             # except pyppeteer.errors.PageError:
             #     pass
 

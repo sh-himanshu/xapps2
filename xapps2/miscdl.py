@@ -103,7 +103,7 @@ class MiscDL:
             "NekoX-Dev/NekoX", f"NekoX-{varient}-{DEVICE.arch}-release.apk"
         )
 
-    async def niksgapps(self, varient: str = "basic") -> Optional[str]:
+    async def nikgapps(self, varient: str = "basic") -> Optional[str]:
         if DEVICE.arch != "arm64-v8a":
             return
         if link := await get_nikgapps(DEVICE.android_str, varient):
