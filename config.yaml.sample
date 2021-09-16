@@ -1,4 +1,5 @@
 addons:
+  - nikgapps@basic ( full | stock | basic | omni | core | go )
   - nekox@mini # ( full | fullAppleEmoji | mini | miniAppleEmoji )
   - instander
   - mixplorer@silver # Silver includes addons
@@ -12,6 +13,14 @@ custom:
 
   - app: Infinity for Reddit
     package: ml.docilealligator.infinityforreddit
+    source: fdroid
+
+  - app: Aurora Droid
+    package: com.aurora.adroid
+    source: fdroid
+
+  - app: Aurora Store
+    package: com.aurora.store
     source: fdroid
 
   - app: VLC
@@ -30,6 +39,10 @@ custom:
 
   - app: Whatsapp
     package: com.whatsapp
+    source: playstore
+
+  - app: Gmail
+    package: com.google.android.gm
     source: playstore
 
   - app: Google Keep - notes and lists
@@ -68,21 +81,17 @@ custom:
     package: com.duokan.phone.remotecontroller
     source: playstore
 
+  - app: Brave Private Browser
+    package: com.brave.browser
+    source: playstore
+
   - app: Microsoft Teams
     package: com.microsoft.teams
     source: playstore
 
   - app: Google Camera
     args:
-      - best
+      - best # Depends on device codename
+      # or provide a direct link
+      # - https://www.celsoazevedo.com/files/android/google-camera/f/changelog1500/
     source: gcam
-
-  - app: Bromite
-    source: github
-    args:
-      - bromite/bromite
-      - arm64_ChromePublic.apk
-
-  - app: LinkedIn
-    package: com.linkedin.android
-    source: playstore

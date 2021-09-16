@@ -3,34 +3,37 @@ name: Code Formatter
 on: push
 
 jobs:
-    LINT:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v2
-            - name: Setup Python
-              uses: actions/setup-python@v1
-              with:
-                  python-version: 3.9
-            - name: Installing requirements
-              run: |
-                  pip install autopep8 autoflake isort black
-            - name: Check for showstoppers
-              run: >
-                  autopep8 --verbose --in-place --recursive --aggressive --aggressive
-                  --ignore=W605 .
-            - name: Remove unused imports and variables
-              run: >
-                  autoflake --in-place --recursive --remove-all-unused-imports
-                  --remove-unused-variables --ignore-init-module-imports .
-            - name: linting with isort and black
-              run: |
-                  isort .
-                  black .
-            - uses: stefanzweifel/git-auto-commit-action@v4
-              with:
-                  commit_message: "auto: code formatting"
-                  commit_options: "--no-verify"
-                  repository: .
-                  commit_user_name: code-rgb
-                  commit_user_email: 62891774+code-rgb@users.noreply.github.com
-                  commit_author: code-rgb <62891774+code-rgb@users.noreply.github.com>
+  LINT:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+      - name: Install Poetry
+        run: curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+      - name: Add Poetry to path
+        run: echo "${HOME}/.poetry/bin" >> $GITHUB_PATH
+      - name: Install Requirements
+        run: poetry install --only dev
+      - name: Check for showstoppers
+        run: >
+          poetry run autopep8 --verbose --in-place --recursive --aggressive --aggressive
+          --ignore=W605 .
+      - name: Remove unused imports and variables
+        run: >
+          poetry run autoflake --in-place --recursive --remove-all-unused-imports
+          --remove-unused-variables --ignore-init-module-imports .
+      - name: linting with isort and black
+        run: |
+          poetry run isort .
+          poetry run black .
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "auto: code formatting"
+          commit_options: "--no-verify"
+          repository: .
+          commit_user_name: code-rgb
+          commit_user_email: 62891774+code-rgb@users.noreply.github.com
+          commit_author: code-rgb <62891774+code-rgb@users.noreply.github.com>
