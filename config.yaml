@@ -16,10 +16,6 @@ custom:
 
   - app: VLC
     package: org.videolan.vlc
-    source: playstore
-
-  - app: AdAway
-    package: org.adaway
     source: fdroid
 
   - app: Vanced Manager
@@ -60,9 +56,9 @@ custom:
  #   package: com.google.android.apps.photos
  #   source: playstore
 
- # - app: Termux
- #   package: com.termux
- #   source: fdroid
+   - app: Termux
+     package: com.termux
+     source: fdroid
 
 #  - app: Mi Remote controller
 #    package: com.duokan.phone.remotecontroller
@@ -77,11 +73,11 @@ custom:
   #     - best
   #   source: gcam
 
- # - app: Bromite
- #   source: github
- #   args:
- #     - bromite/bromite
- #     - arm64_ChromePublic.apk
+ - app: Bromite
+   source: github
+   args:
+     - bromite/bromite
+     - arm64_ChromePublic.apk
 
  # - app: LinkedIn
  #   package: com.linkedin.android
